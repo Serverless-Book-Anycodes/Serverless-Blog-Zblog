@@ -1,0 +1,40 @@
+ServerlessBookZblogDemo:
+  Component: fc
+  Provider: alibaba
+  Access: anycodes_release
+  Properties:
+    Region: cn-hongkong
+    Service:
+      Name: serverless-book-case
+      Description: Serverless 实践图书案例
+      Vpc:
+        SecurityGroupId: sg-j6c45wkv4vf4ghg104mc
+        VSwitchIds:
+          - vsw-j6c797ywau90y6y03ohbq
+        VpcId: vpc-j6c9lk4av0859r4e0tff7
+      Log: Auto
+      Nas: Auto
+    Function:
+      Name: serverless-zblog
+      Description: Serverless ZBlog
+      CodeUri:
+        Src: ./src/code
+      Handler: index.handler
+      MemorySize: 128
+      Runtime: php7.2
+      Timeout: 200
+      Triggers:
+        - Name: ServerlessZBlog
+          Type: HTTP
+          Parameters:
+            AuthType: ANONYMOUS
+            Methods:
+              - GET
+              - POST
+              - PUT
+            Domains:
+              - Domain: zblog.web.framework.serverless.fun
+                Protocol:
+                  - HTTP
+                Routes:
+                  - Path: '/*'
